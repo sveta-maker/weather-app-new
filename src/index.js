@@ -1,12 +1,21 @@
 function refreshWeather(response) {
-    let temperatureElement = document.querySelector("#temperature");
     let cityElement = document.querySelector("#city");
+    if (response.data.status === "not_found") { 
+        cityElement.innerHTML = '<h5>City not found. Please check the city name and try again.</h5>'; 
+        return;
+    }
+
+    let temperatureElement = document.querySelector("#temperature");
+   
     let temperature = response.data.temperature.current;
     let descriptionElement = document.querySelector("#description");
     let humidityElement = document.querySelector("#humidity");
     let windSpeedElement = document.querySelector("#wind-speed");
     let timeElement = document.querySelector("#time");
     let date = new Date(response.data.time * 1000);
+    let iconElement = document.querySelector("#icon");
+        
+    iconElement.innerHTML =  `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
  
     temperatureElement.innerHTML = Math.round(temperature);       
     cityElement.innerHTML = response.data.city;
